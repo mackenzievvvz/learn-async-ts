@@ -4,6 +4,17 @@
  * @returns a promise that resolves to the sum of all numbers in the 2D array
  * or rejects if the array is empty
  */
+function setTimeout(arr: number[][]): number {
+    let sum = 0;
+    for (let i = 0; i < arr.length; i++) {
+        for (let j = 0; j < arr[i].length; j++) {
+            console.log(`Adding ${arr[i][j]} to sum`);
+            sum += arr[i][j];
+        }
+    }
+    return sum;
+}
+
 function sum2DArray(arr: number[][]): Promise<number> {
     return new Promise((resolve, reject) => {
         console.log('Sum called ... ');
@@ -16,16 +27,8 @@ function sum2DArray(arr: number[][]): Promise<number> {
          * Replace the logic in the setTimeout() with the actual logic to sum the numbers
          * to understand the difference in execution with and without setTimeout()
          **/
-        setTimeout(() => {
-            let sum = 0;
-            for (let i = 0; i < arr.length; i++) {
-                for (let j = 0; j < arr[i].length; j++) {
-                    console.log(`Adding ${arr[i][j]} to sum`);
-                    sum += arr[i][j];
-                }
-            }
-            resolve(sum);
-        }, 0);
+        let sum = setTimeout(arr);
+        resolve(sum);
         console.log('returning from sum');
     });
 }
@@ -37,8 +40,13 @@ const array2D = [
     [7, 8, 9]
 ];
 
-const sumPromise1 = sum2DArray(array2D);
-console.log('sumPromise1:', sumPromise1);
+const sumPromise1 = sum2DArray(array2D)
+    .then((sum: number) => {
+        console.log('sumPromise1:', sum);});
 
-const sumPromise2 = sum2DArray([]);
-console.log('sumPromise2:', sumPromise2);
+const sumPromise2 = sum2DArray([])
+    .then((sum: number) => {
+        console.log('sumPromise2:', sum);})
+    .catch((error: any) => {
+        console.error('sumPromise2:', error);
+    });
