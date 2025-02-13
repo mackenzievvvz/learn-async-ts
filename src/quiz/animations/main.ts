@@ -32,6 +32,37 @@ else{
   console.warn("#alice not found");
 }
 
+async function animateAlice10() : Promise<void> {
+  if (alice10) {
+    alice10.animate(aliceTumbling1, aliceTiming1)
+              .finished;
+  } else {
+    throw("potnetially null");
+  }
+}
+
+async function animateAlice20() : Promise<void> {
+  if (alice20) {
+    await animateAlice10();
+    alice20.animate(aliceTumbling1, aliceTiming1)
+              .finished;
+  } else {
+    throw("potnetially null");
+  }
+}
+
+async function animateAlice30() : Promise<void> {
+  if (alice30) {
+    await animateAlice20();
+    alice30.animate(aliceTumbling1, aliceTiming1)
+              .finished;
+  } else {
+    throw("potnetially null");
+  }
+}
+
+animateAlice30();
+
 // alice10
 //     .animate(aliceTumbling1, aliceTiming1)
 //     .finished
