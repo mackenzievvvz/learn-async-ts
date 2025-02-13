@@ -2,3 +2,14 @@
 - Is there a difference in the flow of execution from when the code was in the setTimeout function?
 - Is the flow of execution in both these examples different from the flow of execution with the examples using the fetch() API, which also returns a promise? 
 - If yes, explain the code execution difference. Add your explanation to this file.
+
+for why the output looks different (addition occurs during the main event loop
+not at the end after the main program has ended).
+this is because the event loop will typically complete microtasks while completing IO
+operations. So while the main program's console.log() are being executed, so is the 
+summation which is in the microTasks.
+ 
+However, when setTimeout is removed from the Promise into another function,
+the CPU goes to the poll queue rather than the microtask queue
+or the Timer queue, meaning it will be executed before the primary IO operations
+from the main program.

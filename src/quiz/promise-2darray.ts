@@ -1,14 +1,4 @@
 /**
- * for why the output looks different (addition occurs during the main event loop
- * not at the end after the main program has ended)
- * this is because the event loop will typically complete microtasks while completing IO
- * operations. However, setTimeout goes to the Poll queue rather than the microtask queue
- * or the Timer queue, meaning it will be executed before the primary IO operations
- * from the main program.
- */
-
-
-/**
  * An asynchronous function that sums all numbers in a 2D array
  * @param arr 2D array of numbers
  * @returns a promise that resolves to the sum of all numbers in the 2D array
