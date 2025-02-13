@@ -1,4 +1,14 @@
 /**
+ * for why the output looks different (addition occurs during the main event loop
+ * not at the end after the main program has ended)
+ * this is because the event loop will typically complete microtasks while completing IO
+ * operations. However, setTimeout goes to the Poll queue rather than the microtask queue
+ * or the Timer queue, meaning it will be executed before the primary IO operations
+ * from the main program.
+ */
+
+
+/**
  * An asynchronous function that sums all numbers in a 2D array
  * @param arr 2D array of numbers
  * @returns a promise that resolves to the sum of all numbers in the 2D array
@@ -40,13 +50,16 @@ const array2D = [
     [7, 8, 9]
 ];
 
-const sumPromise1 = sum2DArray(array2D)
-    .then((sum: number) => {
-        console.log('sumPromise1:', sum);});
+const sumPromise1 = sum2DArray(array2D);
+sumPromise1.then((sum: number) => {
+        console.log('sumPromise1:', sum);})
+    .catch((error: any) => {
+        console.error('sumPromise1 error:', error);
+    });
 
-const sumPromise2 = sum2DArray([])
-    .then((sum: number) => {
+const sumPromise2 = sum2DArray([]);
+sumPromise2.then((sum: number) => {
         console.log('sumPromise2:', sum);})
     .catch((error: any) => {
-        console.error('sumPromise2:', error);
+        console.error('sumPromise2 error:', error);
     });
