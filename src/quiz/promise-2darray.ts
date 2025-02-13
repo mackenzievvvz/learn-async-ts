@@ -15,20 +15,6 @@ function setTimeout(arr: number[][]): number {
     return sum;
 }
 
-function addRow(arr: number[]): Promise<number> {
-    return new Promise((resolve, reject) => {
-        console.log('add Row called ... ');
-        let sum = 0;
-        if(arr.length === 0) {
-            reject('Cannot sum an empty array');
-        }
-        for (let i = 0; i < arr.length; i++) {
-            sum += arr[i];
-        }
-        resolve(sum);
-    });
-}
-
 function sum2DArray(arr: number[][]): Promise<number> {
     return new Promise((resolve, reject) => {
         console.log('Sum called ... ');
@@ -67,21 +53,3 @@ sumPromise2.then((sum: number) => {
     .catch((error: any) => {
         console.error('sumPromise2 error:', error);
     });
-
-
-let promise : Promise<number>[] = [];
-for (let i = 0; i < array2D.length; i++) {
-    promise.push(addRow(array2D[i]));
-}
-
-Promise.all(promise)
-    .then((sums: number[]) => {
-        let sum = 0;
-        sums.forEach((s) => sum = sum + s);
-        console.log('sumPromise3:', sum);
-    })
-    .catch((error: any) => {
-        console.error('sumPromise3 error:', error);
-    });
-
-console.log('End of script');
